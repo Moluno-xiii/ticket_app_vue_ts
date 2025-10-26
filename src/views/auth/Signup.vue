@@ -21,11 +21,6 @@ const handleSubmit = (e: SubmitEvent) => {
     toast.error("Both passwords fields do not match, try again.");
     return;
   }
-  console.log("signup data", {
-    password: password.value,
-    confirmPassword: confirmPassword.value,
-    email: email.value,
-  });
   signup({ email: email.value, password: password.value });
 };
 </script>

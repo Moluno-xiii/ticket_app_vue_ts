@@ -35,8 +35,6 @@ const useAuth = (): UseAuthReturnTypes => {
     }
   });
 
-  console.log(isLoggedIn.value ? "logged in" : "not logged in");
-
   const signup: UseAuthReturnTypes["signup"] = (credentials) => {
     if (
       parsedExistingUser?.email.toLowerCase() ===
@@ -50,11 +48,9 @@ const useAuth = (): UseAuthReturnTypes => {
     localStorage.setItem("existingUser", JSON.stringify(credentials));
     parsedExistingUser = credentials;
     router.push("/auth/login");
-    console.log("signup crentials", credentials);
   };
 
   const login: UseAuthReturnTypes["login"] = (credentials) => {
-    console.log(parsedExistingUser);
     if (
       parsedExistingUser?.email.toLowerCase() !==
       credentials.email.toLowerCase()
@@ -70,7 +66,6 @@ const useAuth = (): UseAuthReturnTypes => {
     router.push("/dashboard/");
     isLoggedIn.value = true;
     localStorage.setItem("ticketapp_session", crypto.randomUUID() + Date.now());
-    console.log("login", credentials);
   };
 
   const logout: UseAuthReturnTypes["logout"] = () => {

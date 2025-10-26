@@ -1,9 +1,29 @@
 <script setup lang="ts">
 import { Io5TicketOutline } from "vue-icons-plus/io5";
+import { CgMenuRightAlt } from "vue-icons-plus/cg";
 import useAuth from "../../composables/useAuth";
 import Button from "./Button.vue";
+import { ref } from "vue";
+import MobileSidebar from "../MobileSidebar.vue";
+import LogoutModal from "../LogoutModal.vue";
 
-const { isLoggedIn, logout } = useAuth();
+const { isLoggedIn } = useAuth();
+const sidebar = ref(false);
+const isLogoutModalOpen = ref(false);
+
+const closeSidebar = () => {
+  sidebar.value = false;
+};
+const openSidebar = () => {
+  sidebar.value = true;
+};
+
+const openLogoutModal = () => {
+  isLogoutModalOpen.value = true;
+};
+const closeLogoutModal = () => {
+  isLogoutModalOpen.value = false;
+};
 </script>
 <template>
   <header
@@ -34,6 +54,27 @@ const { isLoggedIn, logout } = useAuth();
         </li>
       </ul>
     </nav>
-    <Button v-if="isLoggedIn" title="Logout" variant="error" @click="logout" />
+    <Button
+      v-if="isLoggedIn"
+      title="Logout"
+      variant="error"
+      @click="openLogoutModal"
+      additional-styles="hidden sm:block"
+    />
+    <MobileSidebar
+      :close-sidebar="closeSidebar"
+      :open-logout-modal="openLogoutModal"
+      v-if="sidebar"
+    />
+    <CgMenuRightAlt
+      v-if="isLoggedIn"
+      class="text-primary block sm:hidden"
+      @click="openSidebar"
+    />
+    <LogoutModal
+      v-if="isLogoutModalOpen"
+      :close-modal="closeLogoutModal"
+      :close-sidebar="closeSidebar"
+    />
   </header>
 </template>

@@ -17,10 +17,6 @@ const handleSubmit = (e: SubmitEvent) => {
     toast.error("Invalid email");
     return;
   }
-  console.log("signup data", {
-    password: password.value,
-    email: email.value,
-  });
   login({ email: email.value, password: password.value });
 };
 </script>

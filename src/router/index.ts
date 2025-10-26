@@ -39,7 +39,7 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: "/tickets/edit",
+    path: "/tickets/edit/:ticketId",
     name: "Ticketier | Edit ticket",
     component: EditTicket,
     meta: { requiresAuth: true },
@@ -89,7 +89,7 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  linkActiveClass: "font-bold",
+  linkActiveClass: "font-bold textt-xl",
 });
 
 router.beforeEach((to, _, next) => {
