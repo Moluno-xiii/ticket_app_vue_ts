@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import router from "../../router";
 
-if (router.currentRoute.value.fullPath === "/dashboard/") {
+if (
+  router.currentRoute.value.fullPath === "/dashboard/" ||
+  router.currentRoute.value.fullPath === "/dashboard"
+) {
   router.push("/dashboard/overview");
 }
 </script>

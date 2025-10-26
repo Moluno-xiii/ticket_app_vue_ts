@@ -2,13 +2,10 @@
 // defineProps<{ msg: string }>();
 import HeroFeatures from "../components/HeroFeatures.vue";
 import Button from "../components/ui/Button.vue";
+import useAuth from "../composables/useAuth";
 import router from "../router";
 
-const userDetails = {
-  name: "Someone else",
-};
-
-const isLoggedIn = true;
+const { isLoggedIn, userDetails } = useAuth();
 </script>
 
 <template>
@@ -27,7 +24,6 @@ const isLoggedIn = true;
       v-if="isLoggedIn"
       title="Continue"
       @click="() => router.push('/dashboard')"
-      additional-styles=""
     />
     <Button
       v-else

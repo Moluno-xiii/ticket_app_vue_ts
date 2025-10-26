@@ -10,6 +10,9 @@ import Settings from "../views/dashboard/Settings.vue";
 import Auth from "../views/auth/Auth.vue";
 import NewTicket from "../views/tickets/NewTicket.vue";
 import EditTicket from "../views/tickets/EditTicket.vue";
+import NotFound from "../views/NotFound.vue";
+import useAuth from "../composables/useAuth";
+import { toast } from "vue-sonner";
 
 const routes = [
   {
@@ -21,26 +24,31 @@ const routes = [
     path: "/tickets",
     name: "Ticketier | Tickets page",
     component: Tickets,
+    meta: { requiresAuth: true },
   },
   {
     path: "/tickets/:ticketId",
     name: "Ticketier | Ticket Details",
     component: TicketDetails,
+    meta: { requiresAuth: true },
   },
   {
     path: "/tickets/new",
     name: "Ticketier | Create new Ticket",
     component: NewTicket,
+    meta: { requiresAuth: true },
   },
   {
     path: "/tickets/edit",
     name: "Ticketier | Edit ticket",
     component: EditTicket,
+    meta: { requiresAuth: true },
   },
   {
     path: "/dashboard",
     name: "Ticketier | Dashboard",
     component: Dashboard,
+    meta: { requiresAuth: true },
     children: [
       {
         path: "overview",
@@ -71,6 +79,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "Error 404",
+    component: NotFound,
+  },
 ];
 
 const router = createRouter({
@@ -79,4 +92,14 @@ const router = createRouter({
   linkActiveClass: "font-bold",
 });
 
+router.beforeEach((to, from, next) => {
+  const { isLoggedIn } = useAuth();
+
+  if (to.meta.requiresAuth && !isLoggedIn.value) {
+    toast.error("You need to be logged in to access this route.");
+    next("/auth/login");
+  } else {
+    next();
+  }
+});
 export default router;
