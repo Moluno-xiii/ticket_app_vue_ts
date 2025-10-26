@@ -92,7 +92,7 @@ const router = createRouter({
   linkActiveClass: "font-bold",
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const { isLoggedIn } = useAuth();
 
   if (to.meta.requiresAuth && !isLoggedIn.value) {
